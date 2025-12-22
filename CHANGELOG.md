@@ -1,5 +1,8 @@
 
 ## UPDATED CHANGELOG.md
+## [1.0.7]
+### Added
+- Demo Added.
 
 ## [1.0.6]
 ### Added
