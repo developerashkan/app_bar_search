@@ -12,6 +12,9 @@ A highly customizable Flutter AppBar with integrated search functionality and 5 
 * **Elastic** – Bouncy spring animation
 * **Slide Right** – Horizontal slide transition
 
+  [Screen_recording_20251222_184057.webm](https://github.com/user-attachments/assets/3166f618-32ac-44fd-bc9a-cfc1c92db2b3)
+
+
 🎯 **Full Customization**
 
 * Custom text styles and colors
