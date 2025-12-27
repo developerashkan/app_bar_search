@@ -1,3 +1,7 @@
+## [1.0.9]
+### Added
+- Add Some Improvements
+
 ## [1.0.8]
 ### Added
 - 5 distinct animation styles: fadeSlide, scale, rotate, elastic, slideRight

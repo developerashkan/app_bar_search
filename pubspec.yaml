@@ -1,6 +1,6 @@
 name: app_bar_search
 description: A lightweight Flutter AppBar widget with integrated search and smooth animations.
-version: 1.0.8
+version: 1.0.9
 homepage: https://github.com/ashkanbmn/app_bar_search
 
 environment:
