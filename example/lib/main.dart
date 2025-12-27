@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onChanged: (value) {
           setState(() => _searchQuery = value);
         },
+        animationStyle: SearchAnimationStyle.scale,
         onClear: () {
           setState(() => _searchQuery = '');
         },
