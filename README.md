@@ -2,7 +2,7 @@
 
 A highly customizable Flutter AppBar with integrated search functionality and 5 beautiful animation styles.
 
-## Feature
+## Features
 
 ✨ **10 Modern Animation Styles**
 
