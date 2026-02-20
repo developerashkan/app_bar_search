@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 enum SearchAnimationStyle {
   fadeSlide,
@@ -6,6 +7,11 @@ enum SearchAnimationStyle {
   rotate,
   elastic,
   slideRight,
+  flipVertical,
+  revealRight,
+  slideUp,
+  zoomOut,
+  bounce,
 }
 
 class AppBarSearch extends StatefulWidget implements PreferredSizeWidget {
@@ -25,7 +31,7 @@ class AppBarSearch extends StatefulWidget implements PreferredSizeWidget {
     this.inputDecoration,
     this.backgroundColor,
     this.iconColor,
-    this.animationDuration = const Duration(milliseconds: 300),
+    this.animationDuration = const Duration(milliseconds: 350),
     this.autoFocus = true,
     this.animationStyle = SearchAnimationStyle.fadeSlide,
   });
@@ -58,8 +64,7 @@ class AppBarSearch extends StatefulWidget implements PreferredSizeWidget {
   State<AppBarSearch> createState() => _AppBarSearchState();
 }
 
-class _AppBarSearchState extends State<AppBarSearch>
-    with SingleTickerProviderStateMixin {
+class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderStateMixin {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
   late final AnimationController _animationController;
@@ -93,8 +98,10 @@ class _AppBarSearchState extends State<AppBarSearch>
       _animationController.forward();
       if (widget.autoFocus) {
         Future.delayed(
-          const Duration(milliseconds: 100),
-          _focusNode.requestFocus,
+          Duration(milliseconds: (widget.animationDuration.inMilliseconds * 0.3).round()),
+          () {
+            if (mounted) _focusNode.requestFocus();
+          },
         );
       }
     } else {
@@ -105,6 +112,7 @@ class _AppBarSearchState extends State<AppBarSearch>
     }
   }
 
+
   Widget _buildTitleExit(Animation<double> animation, Widget child) {
     switch (widget.animationStyle) {
       case SearchAnimationStyle.fadeSlide:
@@ -113,8 +121,8 @@ class _AppBarSearchState extends State<AppBarSearch>
           child: SlideTransition(
             position: Tween<Offset>(
               begin: Offset.zero,
-              end: const Offset(0, -0.2),
-            ).animate(animation),
+              end: const Offset(0, -0.5),
+            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeIn)),
             child: child,
           ),
         );
@@ -135,7 +143,7 @@ class _AppBarSearchState extends State<AppBarSearch>
           opacity: Tween<double>(begin: 1, end: 0).animate(animation),
           child: RotationTransition(
             turns: Tween<double>(begin: 0, end: 0.1).animate(
-              CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+              CurvedAnimation(parent: animation, curve: Curves.easeIn),
             ),
             child: child,
           ),
@@ -143,7 +151,9 @@ class _AppBarSearchState extends State<AppBarSearch>
 
       case SearchAnimationStyle.elastic:
         return FadeTransition(
-          opacity: Tween<double>(begin: 1, end: 0).animate(animation),
+          opacity: Tween<double>(begin: 1, end: 0).animate(
+            CurvedAnimation(parent: animation, curve: const Interval(0.0, 0.5)),
+          ),
           child: ScaleTransition(
             scale: Tween<double>(begin: 1, end: 0.5).animate(
               CurvedAnimation(parent: animation, curve: Curves.easeInBack),
@@ -158,7 +168,71 @@ class _AppBarSearchState extends State<AppBarSearch>
           child: SlideTransition(
             position: Tween<Offset>(
               begin: Offset.zero,
-              end: const Offset(0.3, 0),
+              end: const Offset(0.2, 0),
+            ).animate(animation),
+            child: child,
+          ),
+        );
+
+      case SearchAnimationStyle.flipVertical:
+        return AnimatedBuilder(
+          animation: animation,
+          builder: (context, child) {
+            final double angle = animation.value * (math.pi / 2);
+            return Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateX(-angle),
+              alignment: Alignment.center,
+              child: Opacity(
+                opacity: 1.0 - animation.value,
+                child: child,
+              ),
+            );
+          },
+          child: child,
+        );
+
+      case SearchAnimationStyle.revealRight:
+        return FadeTransition(
+          opacity: Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(parent: animation, curve: const Interval(0.0, 0.4)),
+          ),
+          child: child,
+        );
+
+      case SearchAnimationStyle.slideUp:
+        return FadeTransition(
+          opacity: Tween<double>(begin: 1, end: 0).animate(animation),
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(0, -1.0),
+            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
+            child: child,
+          ),
+        );
+
+      case SearchAnimationStyle.zoomOut:
+        return FadeTransition(
+          opacity: Tween<double>(begin: 1, end: 0).animate(animation),
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 1.0, end: 0.5).animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeInQuad),
+            ),
+            child: child,
+          ),
+        );
+
+      case SearchAnimationStyle.bounce:
+        return FadeTransition(
+          opacity: Tween<double>(begin: 1, end: 0).animate(
+            CurvedAnimation(parent: animation, curve: const Interval(0, 0.5)),
+          ),
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-0.2, 0),
             ).animate(animation),
             child: child,
           ),
@@ -173,9 +247,9 @@ class _AppBarSearchState extends State<AppBarSearch>
           opacity: animation,
           child: SlideTransition(
             position: Tween<Offset>(
-              begin: const Offset(0, 0.2),
+              begin: const Offset(0, 0.5),
               end: Offset.zero,
-            ).animate(animation),
+            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut)),
             child: child,
           ),
         );
@@ -184,7 +258,7 @@ class _AppBarSearchState extends State<AppBarSearch>
         return FadeTransition(
           opacity: animation,
           child: ScaleTransition(
-            scale: Tween<double>(begin: 0.8, end: 1).animate(
+            scale: Tween<double>(begin: 0.9, end: 1).animate(
               CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
             ),
             child: child,
@@ -218,10 +292,80 @@ class _AppBarSearchState extends State<AppBarSearch>
           opacity: animation,
           child: SlideTransition(
             position: Tween<Offset>(
-              begin: const Offset(-0.3, 0),
+              begin: const Offset(-0.2, 0),
               end: Offset.zero,
             ).animate(
               CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+            ),
+            child: child,
+          ),
+        );
+
+      case SearchAnimationStyle.flipVertical:
+        return AnimatedBuilder(
+          animation: animation,
+          builder: (context, child) {
+            final double angle = (1.0 - animation.value) * (math.pi / 2);
+            return Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateX(angle),
+              alignment: Alignment.center,
+              child: Opacity(
+                opacity: animation.value,
+                child: child,
+              ),
+            );
+          },
+          child: child,
+        );
+
+      case SearchAnimationStyle.revealRight:
+        return Align(
+          alignment: Alignment.centerRight,
+          child: SizeTransition(
+            sizeFactor: CurvedAnimation(parent: animation, curve: Curves.easeOutExpo),
+            axis: Axis.horizontal,
+            axisAlignment: 1.0,
+            child: FadeTransition(
+              opacity: CurvedAnimation(parent: animation, curve: const Interval(0.2, 1.0)),
+              child: child,
+            ),
+          ),
+        );
+
+      case SearchAnimationStyle.slideUp:
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1.0),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+            child: child,
+          ),
+        );
+
+      case SearchAnimationStyle.zoomOut:
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 1.5, end: 1.0).animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+            ),
+            child: child,
+          ),
+        );
+
+      case SearchAnimationStyle.bounce:
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-0.5, 0),
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(parent: animation, curve: Curves.bounceOut),
             ),
             child: child,
           ),
@@ -233,9 +377,25 @@ class _AppBarSearchState extends State<AppBarSearch>
     if (widget.animationStyle == SearchAnimationStyle.rotate) {
       return RotationTransition(turns: animation, child: child);
     }
+    if (widget.animationStyle == SearchAnimationStyle.flipVertical) {
+      return AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) {
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(animation.value * math.pi),
+            child: child,
+          );
+        },
+        child: child,
+      );
+    }
+
     return ScaleTransition(
-      scale: Tween<double>(begin: 0.8, end: 1.0).animate(
-        CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+      scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: animation, curve: Curves.elasticOut),
       ),
       child: child,
     );
@@ -245,7 +405,7 @@ class _AppBarSearchState extends State<AppBarSearch>
   Widget build(BuildContext context) {
     final animation = CurvedAnimation(
       parent: _animationController,
-      curve: Curves.easeInOutCubic,
+      curve: Curves.easeInOut,
     );
 
     final textField = TextField(
@@ -259,6 +419,8 @@ class _AppBarSearchState extends State<AppBarSearch>
           InputDecoration(
             hintText: widget.hintText,
             border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0),
+            hintStyle: TextStyle(color: Theme.of(context).hintColor.withOpacity(0.5)),
           ),
     );
 
@@ -273,19 +435,20 @@ class _AppBarSearchState extends State<AppBarSearch>
             Text(
               widget.title,
               style: widget.titleTextStyle,
+              overflow: TextOverflow.fade,
+              softWrap: false,
             ),
           ),
-          _buildSearchEnter(animation, textField),
+          _buildSearchEnter(animation, SizedBox(width: double.infinity, child: textField)),
         ],
       ),
       actions: [
         ...?widget.actions,
         IconButton(
-          tooltip: _searching ? 'Clear' : 'Search',
+          tooltip: _searching ? 'Close' : 'Search',
           icon: AnimatedSwitcher(
             duration: widget.animationDuration,
-            transitionBuilder: (child, animation) =>
-                _buildIconTransition(child, animation),
+            transitionBuilder: (child, anim) => _buildIconTransition(child, anim),
             child: Icon(
               _searching ? Icons.close : Icons.search,
               key: ValueKey(_searching),

@@ -1,3 +1,15 @@
+## [1.1.0]
+### Added
+- The New Animations:
+  flipVertical: A 3D transformation where the title flips up like a shutter, and the search bar flips down into place.
+- 
+  revealRight: The search bar expands horizontally from the search icon (right to left), widely used in Material 3 and modern web headers.
+- 
+  slideUp: A clean motion where the title pushes up and out, while the search bar slides up from the bottom.
+- 
+  zoomOut: Creates depth. The title recedes into the background (fades & scales down), and the search bar fades in on top.
+- 
+  bounce: A playful but polished spring animation where the search bar slides in with a slight overshoot/settle effect.
 ## [1.0.9]
 ### Added
 - Add Some Improvements
