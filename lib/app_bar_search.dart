@@ -64,7 +64,8 @@ class AppBarSearch extends StatefulWidget implements PreferredSizeWidget {
   State<AppBarSearch> createState() => _AppBarSearchState();
 }
 
-class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderStateMixin {
+class _AppBarSearchState extends State<AppBarSearch>
+    with SingleTickerProviderStateMixin {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
   late final AnimationController _animationController;
@@ -98,7 +99,9 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
       _animationController.forward();
       if (widget.autoFocus) {
         Future.delayed(
-          Duration(milliseconds: (widget.animationDuration.inMilliseconds * 0.3).round()),
+          Duration(
+              milliseconds:
+                  (widget.animationDuration.inMilliseconds * 0.3).round()),
           () {
             if (mounted) _focusNode.requestFocus();
           },
@@ -111,7 +114,6 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
       _focusNode.unfocus();
     }
   }
-
 
   Widget _buildTitleExit(Animation<double> animation, Widget child) {
     switch (widget.animationStyle) {
@@ -208,7 +210,8 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
             position: Tween<Offset>(
               begin: Offset.zero,
               end: const Offset(0, -1.0),
-            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
+            ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
             child: child,
           ),
         );
@@ -249,7 +252,8 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
             position: Tween<Offset>(
               begin: const Offset(0, 0.5),
               end: Offset.zero,
-            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut)),
+            ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeOut)),
             child: child,
           ),
         );
@@ -324,11 +328,13 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
         return Align(
           alignment: Alignment.centerRight,
           child: SizeTransition(
-            sizeFactor: CurvedAnimation(parent: animation, curve: Curves.easeOutExpo),
+            sizeFactor:
+                CurvedAnimation(parent: animation, curve: Curves.easeOutExpo),
             axis: Axis.horizontal,
             axisAlignment: 1.0,
             child: FadeTransition(
-              opacity: CurvedAnimation(parent: animation, curve: const Interval(0.2, 1.0)),
+              opacity: CurvedAnimation(
+                  parent: animation, curve: const Interval(0.2, 1.0)),
               child: child,
             ),
           ),
@@ -341,7 +347,8 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
             position: Tween<Offset>(
               begin: const Offset(0, 1.0),
               end: Offset.zero,
-            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+            ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
             child: child,
           ),
         );
@@ -420,7 +427,8 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
             hintText: widget.hintText,
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-            hintStyle: TextStyle(color: Theme.of(context).hintColor.withOpacity(0.5)),
+            hintStyle:
+                TextStyle(color: Theme.of(context).hintColor.withOpacity(0.5)),
           ),
     );
 
@@ -439,7 +447,8 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
               softWrap: false,
             ),
           ),
-          _buildSearchEnter(animation, SizedBox(width: double.infinity, child: textField)),
+          _buildSearchEnter(
+              animation, SizedBox(width: double.infinity, child: textField)),
         ],
       ),
       actions: [
@@ -448,7 +457,8 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
           tooltip: _searching ? 'Close' : 'Search',
           icon: AnimatedSwitcher(
             duration: widget.animationDuration,
-            transitionBuilder: (child, anim) => _buildIconTransition(child, anim),
+            transitionBuilder: (child, anim) =>
+                _buildIconTransition(child, anim),
             child: Icon(
               _searching ? Icons.close : Icons.search,
               key: ValueKey(_searching),
