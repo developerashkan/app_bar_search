@@ -4,13 +4,19 @@ A highly customizable Flutter AppBar with integrated search functionality and 5 
 
 ## Features
 
-✨ **5 Modern Animation Styles**
+✨ **10 Modern Animation Styles**
 
-* **Fade & Slide** – Smooth vertical transition
-* **Scale** – Zoom in/out effect
-* **Rotate** – Spinning transition
-* **Elastic** – Bouncy spring animation
-* **Slide Right** – Horizontal slide transition
+* **Fade & Slide** – Smooth vertical transition.
+* **Scale** – Zoom in/out effect.
+* **Rotate** – Spinning transition.
+* **Elastic** – Bouncy spring animation.
+* **Slide Right** – Horizontal slide transition.
+* **flipVertical** – 3D flip: title up, search down.
+* **revealRight** – Expands from right to left.
+* **slideUp** – Title up, search slides up.
+* **zoomOut** – Title shrinks back, search fades in.
+* **bounce** – Slides in with soft spring effect.
+
 
   [Screen_recording_20251222_184057.webm](https://github.com/user-attachments/assets/3166f618-32ac-44fd-bc9a-cfc1c92db2b3)
 
@@ -35,7 +41,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  app_bar_search: ^1.0.9
+  app_bar_search: ^1.1.0
 ```
 
 Then run:
@@ -91,13 +97,21 @@ AppBarSearch(
 
 ## Animation Styles
 
-| Style      | Description              | Best For            |
-| ---------- | ------------------------ | ------------------- |
-| fadeSlide  | Vertical slide with fade | Default, clean look |
-| scale      | Zoom effect              | Modern apps         |
-| rotate     | Spinning transition      | Playful UI          |
-| elastic    | Bouncy spring            | Eye-catching        |
-| slideRight | Horizontal slide         | Material design     |
+| Style        | Description                         | Best For               |
+| ------------ | ----------------------------------- | ---------------------- |
+| fadeSlide    | Vertical slide with fade            | Default, clean look    |
+| scale        | Zoom effect                         | Modern apps            |
+| rotate       | Spinning transition                 | Playful UI             |
+| elastic      | Bouncy spring                       | Eye-catching           |
+| slideRight   | Horizontal slide                    | Material design        |
+| flipVertical | 3D flip: title up, search down      | Dynamic headers        |
+| revealRight  | Expands from right to left          | Modern web & mobile    |
+| slideUp      | Title up, search slides up          | Smooth vertical motion |
+| zoomOut      | Title shrinks back, search fades in | Depth effect           |
+| bounce       | Soft spring slide-in effect         | Fun, engaging UI       |
+
+
+
 
 ## Parameters
 
