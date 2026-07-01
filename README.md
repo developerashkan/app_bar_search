@@ -41,7 +41,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  app_bar_search: ^1.1.0
+  app_bar_search: ^1.2.0
 ```
 
 Then run:

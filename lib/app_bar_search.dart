@@ -331,7 +331,7 @@ class _AppBarSearchState extends State<AppBarSearch>
             sizeFactor:
                 CurvedAnimation(parent: animation, curve: Curves.easeOutExpo),
             axis: Axis.horizontal,
-            axisAlignment: 1.0,
+            alignment: Alignment.centerRight,
             child: FadeTransition(
               opacity: CurvedAnimation(
                   parent: animation, curve: const Interval(0.2, 1.0)),
@@ -428,7 +428,7 @@ class _AppBarSearchState extends State<AppBarSearch>
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 0),
             hintStyle:
-                TextStyle(color: Theme.of(context).hintColor.withOpacity(0.5)),
+                TextStyle(color: Theme.of(context).hintColor.withValues(alpha: 0.5)),
           ),
     );
 

@@ -1,3 +1,12 @@
+## [1.2.0]
+### Added
+- Updated minimum SDK constraints to Dart 3.8.0 and Flutter 3.32.0.
+
+### Fixed
+- Replaced deprecated `SizeTransition.axisAlignment` with `alignment`.
+- Replaced deprecated `Color.withOpacity` with `Color.withValues`.
+- Updated example app dependencies and fixed widget tests.
+
 ## [1.1.0]
 ### Added
 - The New Animations:
