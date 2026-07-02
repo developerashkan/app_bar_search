@@ -1,6 +1,6 @@
 # app_bar_search
 
-A highly customizable Flutter AppBar with integrated search functionality and 5 beautiful animation style
+A highly customizable Flutter AppBar with integrated search functionality and 5 beautiful animation styles.
 
 ## Features
 
