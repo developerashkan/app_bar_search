@@ -1,16 +1,11 @@
-# app_bar_search_example
+# app_bar_search gallery
 
-Demonstrates how to use the app_bar_search plugin.
+A live playground for every `app_bar_search` design and animation. Switch the
+design, animation, light/dark and right-to-left, then search the destinations
+grid. The layout adapts from phone to desktop (side panel on wide screens).
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter run -d chrome   # or any device
+flutter test            # gallery tests
+flutter test test/screenshots_test.dart --dart-define=CAPTURE=true  # README images
+```

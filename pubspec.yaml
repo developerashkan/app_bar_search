@@ -1,7 +1,12 @@
 name: app_bar_search
-description: A lightweight Flutter AppBar widget with integrated search and smooth animations.
-version: 1.2.0
-homepage: https://github.com/ashkanbmn/app_bar_search
+description: >-
+  A beautiful Flutter app bar with built-in search: six modern designs (pill,
+  glass, gradient, floating, spotlight), ten animations, keyboard shortcuts,
+  RTL, responsive and accessible.
+version: 2.0.0
+homepage: https://github.com/developerashkan/app_bar_search
+repository: https://github.com/developerashkan/app_bar_search
+issue_tracker: https://github.com/developerashkan/app_bar_search/issues
 
 environment:
   sdk: "^3.8.0"
@@ -15,6 +20,25 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+
+topics:
+  - appbar
+  - search
+  - ui
+  - animation
+  - material-design
+
+screenshots:
+  - description: All six designs, closed and open (light).
+    path: assets/screenshots/designs_light.png
+  - description: All six designs, closed and open (dark).
+    path: assets/screenshots/designs_dark.png
+  - description: Pill design opening with the scale animation.
+    path: assets/screenshots/open_animation.gif
+  - description: Glass design blurring content underneath.
+    path: assets/screenshots/phone_glass_dark.png
+  - description: Spotlight command-palette design on desktop.
+    path: assets/screenshots/desktop_spotlight_light.png
 
 flutter:
   uses-material-design: true

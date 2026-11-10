@@ -1,3 +1,41 @@
+## [2.0.0]
+
+### Added
+- **Six designs** via `design:` — `classic`, `pill` (Material 3 search pill),
+  `glass` (frosted liquid glass), `gradient` (vivid on-brand gradient),
+  `floating` (detached capsule) and `spotlight` (command palette with a
+  ⌘K / Ctrl K hint). All derive from the app's `ColorScheme`, light and dark.
+- **Responsive layout** measured on the bar's own width: on wide bars the
+  title stays and search opens beside it (`wideBreakpoint`, `maxSearchWidth`).
+- **Keyboard shortcuts** for web/desktop: ⌘/Ctrl+K and `/` open, Esc closes
+  (`keyboardShortcuts`).
+- `AppBarSearchController` to open/close from code; `onOpen` / `onClose`.
+- `debounce` for `onChanged` (submit flushes).
+- Inline clear button (`showClearButton`), `initiallyOpen`, `titleWidget`,
+  `bottom` (e.g. `TabBar`), `toolbarHeight`, `foregroundColor`, `gradient`,
+  `searchIcon` / `closeIcon`, tooltip overrides, `textInputAction`,
+  `keyboardType`, `automaticallyImplyLeading` (back/drawer like `AppBar`).
+- Back gesture / button closes search before leaving the page (`closeOnBack`).
+- Localized defaults (Search / Close / Clear text) from Material localizations.
+- Reduced-motion support; status-bar icon brightness follows the bar.
+
+### Fixed
+- The hidden search field stayed tappable and keyboard-focusable while closed
+  (tapping the title could open the keyboard); the hidden title stayed
+  tappable while searching. Both layers are now inert, unfocusable and
+  excluded from semantics, and offstage once fully hidden.
+- Opening then quickly closing could still pop the keyboard (delayed focus).
+- Closing cleared the text without calling `onChanged('')`, leaving filters
+  stale.
+- Swapping `controller` / `focusNode` / duration at runtime was ignored.
+- Animations and the reveal direction ignored right-to-left text.
+- Typed text was not vertically centered in the field.
+- Low-contrast hint text.
+- Wrong `homepage` link; README said "5" animations next to a list of 10.
+
+### Changed
+- `hintText` defaults to the localized "Search" instead of `'Search...'`.
+
 ## [1.2.0]
 ### Added
 - Updated minimum SDK constraints to Dart 3.8.0 and Flutter 3.32.0.
