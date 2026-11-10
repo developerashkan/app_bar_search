@@ -3,7 +3,7 @@ description: >-
   A beautiful Flutter app bar with built-in search: six modern designs (pill,
   glass, gradient, floating, spotlight), ten animations, keyboard shortcuts,
   RTL, responsive and accessible.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/developerashkan/app_bar_search
 repository: https://github.com/developerashkan/app_bar_search
 issue_tracker: https://github.com/developerashkan/app_bar_search/issues

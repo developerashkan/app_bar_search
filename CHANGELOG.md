@@ -1,3 +1,13 @@
+## [2.0.1]
+
+### Fixed
+- The search and close icons briefly overlapped while swapping: the elastic
+  curve kept the outgoing icon at full size while the incoming one grew, and
+  `rotate` / `flipVertical` never faded at all. The swap is now sequential for
+  every animation style (the old icon leaves in the first 45 %, the new one
+  arrives after), every style fades, and a per-frame regression test covers
+  all ten styles in both directions.
+
 ## [2.0.0]
 
 ### Added
@@ -20,9 +30,6 @@
 - Reduced-motion support; status-bar icon brightness follows the bar.
 
 ### Fixed
-- The search and close icons overlapped during the swap (the elastic curve
-  kept the outgoing icon at full size; `rotate` and `flipVertical` never faded
-  at all). The swap is now sequential — out, then in — for every style.
 - The hidden search field stayed tappable and keyboard-focusable while closed
   (tapping the title could open the keyboard); the hidden title stayed
   tappable while searching. Both layers are now inert, unfocusable and

@@ -50,7 +50,7 @@ in light and dark mode. Left: closed · right: open.
 
 ```yaml
 dependencies:
-  app_bar_search: ^2.0.0
+  app_bar_search: ^2.0.1
 ```
 
 ## Quick start
