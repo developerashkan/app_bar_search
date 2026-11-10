@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:app_bar_search/app_bar_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,6 +67,45 @@ void main() {
           }
         }
       }
+    }
+  });
+
+  group('icon swap', () {
+    double opacityOf(WidgetTester tester, IconData icon) {
+      final toggle = find.byKey(const ValueKey('app_bar_search.toggle'));
+      final iconFinder = find.descendant(of: toggle, matching: find.byIcon(icon));
+      if (iconFinder.evaluate().isEmpty) return 0;
+      final fades = find.ancestor(of: iconFinder, matching: find.byType(FadeTransition));
+      var o = 1.0;
+      for (final e in fades.evaluate()) {
+        o *= (e.widget as FadeTransition).opacity.value;
+      }
+      return o;
+    }
+
+    for (final style in SearchAnimationStyle.values) {
+      testWidgets('search and close icons never overlap · ${style.name}', (tester) async {
+        final c = AppBarSearchController();
+        await tester.pumpWidget(
+          _app(AppBarSearch(title: 'Home', animationStyle: style, searchController: c, autoFocus: false)),
+        );
+        await tester.pumpAndSettle();
+        for (final open in [true, false]) {
+          open ? c.open() : c.close();
+          var worst = 0.0;
+          for (var i = 0; i < 60; i++) {
+            await tester.pump(const Duration(milliseconds: 8));
+            final both = math.min(opacityOf(tester, Icons.search_rounded), opacityOf(tester, Icons.close_rounded));
+            worst = math.max(worst, both);
+          }
+          expect(
+            worst,
+            lessThan(0.01),
+            reason: '${style.name} ${open ? 'opening' : 'closing'}: both icons visible at once',
+          );
+          await tester.pumpAndSettle();
+        }
+      });
     }
   });
 

@@ -247,24 +247,39 @@ class SearchTransitions {
     }
   }
 
+  /// Curves for the search ↔ close icon swap. The two icons never share the
+  /// screen: the outgoing one is gone in the first 45 % of the swap
+  /// ([iconOutCurve] reaches 0 when the reversing value drops below 0.55) and
+  /// the incoming one only starts after that ([iconInCurve]).
+  static const Curve iconInCurve = Interval(0.45, 1, curve: Curves.easeOutBack);
+  static const Curve iconOutCurve = Interval(0.55, 1, curve: Curves.easeIn);
+
+  /// Transition for one icon of the swap; [a] is already sequenced by
+  /// [iconInCurve] / [iconOutCurve]. Every style fades, so a frame can never
+  /// show both icons at full strength.
   Widget icon(Widget child, Animation<double> a) {
-    if (style == SearchAnimationStyle.rotate) return RotationTransition(turns: a, child: child);
-    if (style == SearchAnimationStyle.flipVertical) {
-      return AnimatedBuilder(
-        animation: a,
-        child: child,
-        builder: (context, child) => Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.001)
-            ..rotateY(a.value * math.pi),
+    final Widget motion;
+    switch (style) {
+      case SearchAnimationStyle.rotate:
+        motion = RotationTransition(
+          turns: Tween<double>(begin: -0.25 * _dir, end: 0).animate(a),
           child: child,
-        ),
-      );
+        );
+      case SearchAnimationStyle.flipVertical:
+        motion = AnimatedBuilder(
+          animation: a,
+          child: child,
+          builder: (context, child) => Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY((1 - a.value) * math.pi / 2),
+            child: child,
+          ),
+        );
+      default:
+        motion = ScaleTransition(scale: Tween<double>(begin: 0.4, end: 1).animate(a), child: child);
     }
-    return ScaleTransition(
-      scale: Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: a, curve: Curves.elasticOut)),
-      child: child,
-    );
+    return FadeTransition(opacity: a, child: motion);
   }
 }

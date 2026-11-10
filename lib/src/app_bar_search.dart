@@ -471,11 +471,16 @@ class _AppBarSearchState extends State<AppBarSearch> with SingleTickerProviderSt
 
   Widget _toggleButton(SearchTransitions tr, MaterialLocalizations loc, SearchDesignSpec spec) {
     final color = widget.iconColor ?? spec.foreground;
+    final full = _anim.duration ?? widget.animationDuration;
     return IconButton(
+      key: const ValueKey('app_bar_search.toggle'),
       tooltip: _open ? (widget.closeTooltip ?? loc.closeButtonTooltip) : (widget.searchTooltip ?? loc.searchFieldLabel),
       onPressed: () => _setOpen(!_open),
       icon: AnimatedSwitcher(
-        duration: _anim.duration ?? widget.animationDuration,
+        // A crisp swap, capped so long field animations don't drag it out.
+        duration: full > const Duration(milliseconds: 320) ? const Duration(milliseconds: 320) : full,
+        switchInCurve: SearchTransitions.iconInCurve,
+        switchOutCurve: SearchTransitions.iconOutCurve,
         transitionBuilder: tr.icon,
         child: KeyedSubtree(
           key: ValueKey(_open),
